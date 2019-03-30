@@ -16,7 +16,11 @@
             <input type="text" class="form-control url" id="inputUrl" placeholder="Enter Url">
         </div>
         <button type="button" class="btn btn-primary mb-2 get_data">Get</button>
+        <br>
     </form>
+    <br>
+    <br>
+        <h4 style="margin-left:20px">Request count : <span class="request_count">0</span></h4>
     <br>
     <br>
     <div class="">
@@ -35,15 +39,20 @@
 <script>
     $(document).ready(function () {
         $('.get_data').on('click', function () {
+            $('ul').empty();
             var url = $('.url').val();
             $.ajax({
                 url: url,
                 success: function (data) {
                     console.log(data);
-                    for (var i = 0; i < data.length; i++) {
-                        var html = '<li class="list-group-item">' + data[i] + '</li>';
+                    var arr = data.data
+
+                    for (var i = 0; i < arr.length; i++) {
+                        var html = '<li class="list-group-item">' + arr[i] + '</li>';
                         $('.data').append(html);
                     }
+                    $('.request_count').html(data.counter)
+
                 },
                 error: function (e) {
                     console.log(e);
